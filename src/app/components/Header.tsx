@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { Button } from "./ui/button";
-import logo from "../../assets/images/svg/church-logo.svg";
+import logo from "../../assets/logo.svg";
 
 export default function Header() {
   const location = useLocation();
@@ -16,7 +16,7 @@ export default function Header() {
     { name: t("nav.churches"), path: "/churches" },
     { name: t("nav.news"), path: "/news" },
     { name: t("nav.ministers"), path: "/ministers" },
-    { name: t("nav.calendar"), path: "/calendar" },
+    // { name: t("nav.calendar"), path: "/calendar" },
     { name: t("nav.pidZamkom"), path: "/pid-zamkom" },
   ];
 
