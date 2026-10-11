@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import mapImage from "/src/assets/ukraine-map.png";
 
 type Props = {
   /** Set this to the existing route that renders ChurchMap. */
@@ -15,7 +16,7 @@ const MARKERS = [
   { id: "kharkiv", x: 716, y: 256, uk: "Харків", en: "Kharkiv", count: 1 },
 ];
 
-const MAP_IMAGE = "/src/assets/ukraine-map.png";
+const MAP_IMAGE = mapImage;
 
 export default function ChurchMapPreview({
   to = "/map",

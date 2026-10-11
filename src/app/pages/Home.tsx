@@ -11,30 +11,35 @@ import { Card, CardContent } from "../components/ui/card";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ChurchMapPreview from "./ChurchMapPreview";
+import lvivChurchPhoto from "../../assets/churches-main/01 - Lviv Main.jpg";
+import kamChurchPhoto from "../../assets/churches-main/02 - Kam mai.jpg";
+import dzChurchPhoto from "../../assets/churches-main/03 - Dz Main.jpg";
+import perChurchPhoto from "../../assets/churches-main/04 - Per main.jpg";
+import camp01 from "../../assets/news/2026/kam/01.png";
 
 const carouselImages = [
   {
-    url: "https://images.unsplash.com/photo-1507692049790-de58290a4334?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Church worship service",
+    url: lvivChurchPhoto,
+    alt: "St, John's UMC Lviv",
   },
   {
-    url: "https://images.unsplash.com/photo-1522158637959-30385a09e0da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Community gathering",
+    url: kamChurchPhoto,
+    alt: "Kamianytsia UMC",
   },
   {
-    url: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Prayer and worship",
+    url: dzChurchPhoto,
+    alt: "Dzherelo UMC Kyiv",
   },
   {
-    url: "https://images.unsplash.com/photo-1570786032462-2efc3ca8fccd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Community praise",
+    url: perChurchPhoto,
+    alt: "Perychyn Church",
   },
 ];
 
 const newsItems = [
   {
     slug: "children-of-the-king",
-    cover: "",
+    cover: camp01,
     period: { en: "August 19–22", uk: "19–22 серпня" },
     title: {
       en: "Children of the King: Planting Seeds for the Next Generation",

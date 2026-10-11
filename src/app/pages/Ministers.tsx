@@ -1,156 +1,225 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Mail, User } from 'lucide-react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Mail, User } from "lucide-react";
+import lvivPastor from "../../assets/ministers/Lviv.jpg";
 
 interface MinisterData {
   id: number;
   name: { en: string; uk: string };
   role: { en: string; uk: string };
   congregationName?: { en: string; uk: string };
-  congregationSlug?: string;   // internal route
-  congregationUrl?: string;    // external URL
+  congregationSlug?: string; // internal route
+  congregationUrl?: string; // external URL
   email?: string;
+  photo?: string;
 }
-
 const ministers: MinisterData[] = [
   {
     id: 0,
-    name: { en: 'Knut Refsdal', uk: 'Кнут Рефсдал' },
-    role: { en: 'Bishop', uk: 'Єпископ' },
-    congregationName: { en: 'Northern Europe and Ukraine Regional Conference UMC', uk: 'Регіональна конференція Північної Європи та України ОМЦ' },
-    congregationUrl: 'https://www.umc-ne.org/',
-    email: 'knut.refsdal@umc-ne.org',
+    name: { en: "Knut Refsdal", uk: "Кнут Рефсдал" },
+    role: { en: "Bishop", uk: "Єпископ" },
+    congregationName: {
+      en: "Northern Europe and Ukraine Regional Conference UMC",
+      uk: "Регіональна конференція Північної Європи та України ОМЦ",
+    },
+    congregationUrl: "https://www.umc-ne.org/",
+    email: "knut.refsdal@umc-ne.org",
   },
   {
     id: 1,
-    name: { en: 'Oleh Starodubets', uk: 'Олег Стародубець' },
-    role: { en: 'District Superintendent', uk: 'Старший пастор' },
-    congregationName: { en: 'LightHouse Church, Uzhhorod', uk: 'LightHouse Church, Ужгород' },
-    congregationSlug: '/churches/lighthouse-uzhhorod',
-    email: 'oleg.umc333@gmail.com',
+    name: { en: "Oleh Starodubets", uk: "Олег Стародубець" },
+    role: { en: "District Superintendent", uk: "Старший пастор" },
+    congregationName: {
+      en: "LightHouse Church, Uzhhorod",
+      uk: "LightHouse Church, Ужгород",
+    },
+    congregationSlug: "/churches/lighthouse-uzhhorod",
+    email: "oleg.umc333@gmail.com",
   },
   {
     id: 2,
-    name: { en: 'Yuliia Starodubets', uk: 'Юлія Стародубець' },
-    role: { en: 'Director', uk: 'Директорка' },
-    congregationName: { en: '"Pid Zamkom" Social and Spiritual Center', uk: 'Соціально-духовний центр «Під Замком»' },
-    congregationSlug: '/pid-zamkom',
-    email: 'yuliastar79@gmail.com',
+    name: { en: "Yuliia Starodubets", uk: "Юлія Стародубець" },
+    role: { en: "Director", uk: "Директорка" },
+    congregationName: {
+      en: '"Pid Zamkom" Social and Spiritual Center',
+      uk: "Соціально-духовний центр «Під Замком»",
+    },
+    congregationSlug: "/pid-zamkom",
+    email: "yuliastar79@gmail.com",
   },
   {
     id: 3,
-    name: { en: 'Vasyl Vuksta', uk: 'Василь Вукста' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'United Methodist Church in Uzhhorod', uk: "Об'єднаної Методистської Церкви в Ужгороді" },
-    congregationSlug: '/churches/umc-uzhhorod',
+    name: { en: "Vasyl Vuksta", uk: "Василь Вукста" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "United Methodist Church in Uzhhorod",
+      uk: "Об'єднаної Методистської Церкви в Ужгороді",
+    },
+    congregationSlug: "/churches/umc-uzhhorod",
   },
   {
     id: 4,
-    name: { en: 'Alla Vuksta', uk: 'Алла Вукста' },
-    role: { en: 'Pastor', uk: 'Пасторка' },
-    congregationName: { en: 'United Methodist Church in Kamianytsia', uk: "Об'єднаної Методистської Церкви в Кам'яниці" },
-    congregationSlug: '/churches/kamianytsia',
+    name: { en: "Alla Vuksta", uk: "Алла Вукста" },
+    role: { en: "Pastor", uk: "Пасторка" },
+    congregationName: {
+      en: "United Methodist Church in Kamianytsia",
+      uk: "Об'єднаної Методистської Церкви в Кам'яниці",
+    },
+    congregationSlug: "/churches/kamianytsia",
   },
   {
     id: 5,
-    name: { en: 'Petro Korpanets', uk: 'Петро Корпанець' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'United Methodist Church in Perechyn', uk: 'Об\'єднаної Методистської Церкви в Перечині' },
-    congregationSlug: '/churches/perechyn',
+    name: { en: "Volodymyr Prokip", uk: "Володимир Прокіп" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "St. John's United Methodist Church, Lviv",
+      uk: "Об'єднаної Методистської Церкви святого Івана, Львів",
+    },
+    congregationSlug: "/churches/st-johns-lviv",
+    photo: lvivPastor,
   },
   {
     id: 6,
-    name: { en: 'Volodymyr Surmai', uk: 'Володимир Сурмай' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'Serednie United Methodist Church', uk: "Об'єднаної Методистської Церкви «Середнє»" },
-    congregationSlug: '/churches/serednie',
+    name: { en: "Liubomyr Rudko", uk: "Любомир Рудько" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "St. John's United Methodist Church, Lviv",
+      uk: "Об'єднаної Методистської Церкви святого Івана, Львів",
+    },
+    congregationSlug: "/churches/st-johns-lviv",
   },
   {
     id: 7,
-    name: { en: 'Volodymyr Khabryko', uk: 'Володимир Хабрико' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'Dzherelo United Methodist Church, Kyiv', uk: "Об'єднаної Методистської Церкви «Джерело», Київ" },
-    congregationSlug: '/churches/dzherelo-kyiv',
+    name: { en: "Volodymyr Khabryko", uk: "Володимир Хабрико" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "Dzherelo United Methodist Church, Kyiv",
+      uk: "Об'єднаної Методистської Церкви «Джерело», Київ",
+    },
+    congregationSlug: "/churches/dzherelo-kyiv",
   },
   {
     id: 8,
-    name: { en: 'Oleksandr Omelchenko', uk: 'Олександр Омельченко' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'Hope of the World Church, Ukrainka', uk: "Церкви «Надія Світу», Українка" },
-    congregationSlug: '/churches/hope-of-the-world-ukrainka',
+    name: { en: "Oleksandr Omelchenko", uk: "Олександр Омельченко" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "Hope of the World Church, Ukrainka",
+      uk: "Церкви «Надія Світу», Українка",
+    },
+    congregationSlug: "/churches/hope-of-the-world-ukrainka",
   },
   {
     id: 9,
-    name: { en: 'Volodymyr Prokip', uk: 'Володимир Прокіп' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: "St. John's United Methodist Church, Lviv", uk: "Об'єднаної Методистської Церкви святого Івана, Львів" },
-    congregationSlug: '/churches/st-johns-lviv',
+    name: { en: "Dennis Kim", uk: "Денніс Кім" },
+    role: { en: "Pastor; online ministry", uk: "Пастор; онлайн-служіння" },
+    congregationName: {
+      en: "United Methodist Church in Kharkiv",
+      uk: "Об'єднаної Методистської Церкви в Харкові",
+    },
+    congregationSlug: "/churches/kharkiv",
   },
   {
     id: 10,
-    name: { en: 'Liubomyr Rudko', uk: 'Любомир Рудько' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: "St. John's United Methodist Church, Lviv", uk: "Об'єднаної Методистської Церкви святого Івана, Львів" },
-    congregationSlug: '/churches/st-johns-lviv',
+    name: { en: "Oleksandr Arnaut", uk: "Олександр Арнаут" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "United Methodist Church in Bispingen, Germany",
+      uk: "Об'єднаної Методистської Церкви в Біспінгені, Німеччина",
+    },
+    congregationSlug: "/churches/bispingen",
   },
   {
     id: 11,
-    name: { en: 'Dennis Kim', uk: 'Денніс Кім' },
-    role: { en: 'Pastor; online ministry', uk: 'Пастор; онлайн-служіння' },
-    congregationName: { en: 'United Methodist Church in Kharkiv', uk: 'Об\'єднаної Методистської Церкви в Харкові' },
-    congregationSlug: '/churches/kharkiv',
+    name: { en: "Petro Korpanets", uk: "Петро Корпанець" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "United Methodist Church in Perechyn",
+      uk: "Об'єднаної Методистської Церкви в Перечині",
+    },
+    congregationSlug: "/churches/perechyn",
   },
   {
     id: 12,
-    name: { en: 'Oleksandr Arnaut', uk: 'Олександр Арнаут' },
-    role: { en: 'Pastor', uk: 'Пастор' },
-    congregationName: { en: 'United Methodist Church in Bispingen, Germany', uk: 'Об\'єднаної Методистської Церкви в Біспінгені, Німеччина' },
-    congregationSlug: '/churches/bispingen',
+    name: { en: "Volodymyr Surmai", uk: "Володимир Сурмай" },
+    role: { en: "Pastor", uk: "Пастор" },
+    congregationName: {
+      en: "Serednie United Methodist Church",
+      uk: "Об'єднаної Методистської Церкви «Середнє»",
+    },
+    congregationSlug: "/churches/serednie",
   },
   {
     id: 13,
-    name: { en: 'Kateryna Dziamko', uk: 'Катерина Дзямко' },
-    role: { en: 'Youth Leader of the United Methodist Church in Ukraine', uk: "Молодіжна лідерка Об'єднаної Методистської Церкви в Україні" },
+    name: { en: "Kateryna Dziamko", uk: "Катерина Дзямко" },
+    role: {
+      en: "Youth Leader of the United Methodist Church in Ukraine",
+      uk: "Молодіжна лідерка Об'єднаної Методистської Церкви в Україні",
+    },
   },
   {
     id: 14,
-    name: { en: 'Yevheniia Fedorova', uk: 'Євгенія Федорова' },
-    role: { en: 'Chaplain', uk: 'Капеланка' },
+    name: { en: "Yevheniia Fedorova", uk: "Євгенія Федорова" },
+    role: { en: "Chaplain", uk: "Капеланка" },
   },
 ];
-
 function PortraitPlaceholder({ name }: { name: string }) {
   const initials = name
-    .split(' ')
+    .split(" ")
     .map((w) => w[0])
     .slice(0, 2)
-    .join('');
+    .join("");
   return (
     <div className="w-full aspect-[3/4] bg-gray-100 flex flex-col items-center justify-center gap-3 border-b border-border">
       <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
         <User className="w-8 h-8 text-gray-400" />
       </div>
-      <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">{initials}</span>
+      <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">
+        {initials}
+      </span>
     </div>
   );
 }
+function MinisterPortrait({ photo, name }: { photo?: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (!photo || failed) return <PortraitPlaceholder name={name} />;
+  return (
+    <img
+      src={photo}
+      alt={name}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+      className="block w-full aspect-[3/4] object-cover object-top border-b border-border"
+    />
+  );
+}
 
-function MinisterCard({ minister, lang }: { minister: MinisterData; lang: 'en' | 'uk' }) {
+function MinisterCard({
+  minister,
+  lang,
+}: {
+  minister: MinisterData;
+  lang: "en" | "uk";
+}) {
   const name = minister.name[lang];
   const role = minister.role[lang];
   const congregationName = minister.congregationName?.[lang];
-
   return (
     <div className="bg-white border border-border rounded-lg overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-200">
       {/* Portrait area */}
-      <PortraitPlaceholder name={name} />
-
+      <MinisterPortrait
+        key={minister.photo?.trim() || "placeholder"}
+        photo={minister.photo?.trim()}
+        name={name}
+      />
       {/* Card body */}
       <div className="p-5 flex flex-col flex-1 gap-3">
         <div>
-          <h3 className="text-base font-semibold leading-snug text-foreground">{name}</h3>
+          <h3 className="text-base font-semibold leading-snug text-foreground">
+            {name}
+          </h3>
         </div>
-
         <div className="flex flex-col gap-1">
           <p className="text-sm text-muted-foreground leading-snug">{role}</p>
           {congregationName && minister.congregationUrl ? (
@@ -170,10 +239,11 @@ function MinisterCard({ minister, lang }: { minister: MinisterData; lang: 'en' |
               {congregationName}
             </Link>
           ) : congregationName ? (
-            <p className="text-sm text-foreground leading-snug">{congregationName}</p>
+            <p className="text-sm text-foreground leading-snug">
+              {congregationName}
+            </p>
           ) : null}
         </div>
-
         {/* Reserved email area */}
         <div className="mt-auto pt-3 border-t border-border">
           {minister.email ? (
@@ -195,27 +265,25 @@ function MinisterCard({ minister, lang }: { minister: MinisterData; lang: 'en' |
     </div>
   );
 }
-
 export default function Ministers() {
-  const { t, i18n } = useTranslation();
-  const lang = (i18n.language === 'uk' ? 'uk' : 'en') as 'en' | 'uk';
-
-  const heading = lang === 'uk' ? 'Наші служителі' : 'Our Ministry Team';
+  const { i18n } = useTranslation();
+  const lang = (i18n.language === "uk" ? "uk" : "en") as "en" | "uk";
+  const heading = lang === "uk" ? "Наші служителі" : "Our Ministry Team";
   const subtitle =
-    lang === 'uk'
+    lang === "uk"
       ? "Пастори, капелани та лідери, які служать у громадах Об'єднаної Методистської Церкви в Україні та за кордоном."
-      : 'Pastors, chaplains and leaders serving United Methodist Church communities in Ukraine and abroad.';
-
+      : "Pastors, chaplains and leaders serving United Methodist Church communities in Ukraine and abroad.";
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero */}
       <section className="bg-white border-b border-gray-200 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heading}</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {subtitle}
+          </p>
         </div>
       </section>
-
       {/* Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6">

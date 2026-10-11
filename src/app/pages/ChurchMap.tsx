@@ -11,6 +11,7 @@ import {
   Wifi,
   Globe,
 } from "lucide-react";
+import mapImage from "/src/assets/ukraine-map.png";
 import {
   congregations,
   type Congregation,
@@ -24,7 +25,7 @@ const MAP_POINTS: Record<string, { x: number; y: number }> = {
   "st-johns-lviv": { x: 109, y: 271 },
   kharkiv: { x: 716, y: 256 },
 };
-const MAP_IMAGE = "/src/assets/ukraine-map.png";
+const MAP_IMAGE = mapImage;
 // ── Congregation positions [lon, lat] ─────────────────────────────────────────
 const POSITIONS: Record<string, [number, number]> = {
   "dzherelo-kyiv": [30.52, 50.45],
